@@ -1,10 +1,19 @@
 const createError = require("http-errors");
 const cookieSession = require("cookie-session");
 const express = require("express");
+const mongoose = require("mongoose");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const config = require("./config");
+
+mongoose.connect(config.db, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
 
 const indexRouter = require("./routes/index");
 const newsRouter = require("./routes/news");
