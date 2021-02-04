@@ -13,9 +13,11 @@ router.get("/", (req, res) => {
     sort = defaultSort;
   }
 
-  const findNews = News.find({ title: new RegExp(search, "i") }).sort({
-    created: sort,
-  });
+  const findNews = News.find({ title: new RegExp(search, "i") })
+    .sort({
+      created: sort,
+    })
+    .select("_id title description");
 
   findNews.exec((err, data) => {
     res.json(data);
@@ -25,7 +27,7 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   const id = req.params.id;
 
-  const findNews = News.findById(id);
+  const findNews = News.findById(id).select("_id title description");
 
   findNews.exec((err, data) => {
     res.json(data);
