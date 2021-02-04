@@ -18,18 +18,21 @@ router.get("/", (req, res) => {
 });
 
 router.get("/news/add", (req, res) => {
-  res.render("admin/news-form", { title: "Dodaj news" });
+  res.render("admin/news-form", { title: "Dodaj news", errors: {}, body: {} });
 });
 
 router.post("/news/add", (req, res) => {
   const { body } = req;
   const newsData = new News(body);
+  const errors = newsData.validateSync();
 
   newsData.save((err) => {
-    console.log(err);
+    if (err) {
+      res.render("admin/news-form", { title: "Dodaj news", errors, body });
+      return;
+    }
+    res.redirect("/admin");
   });
-
-  res.render("admin/news-form", { title: "Dodaj news" });
 });
 
 module.exports = router;
