@@ -2,6 +2,10 @@ extends ../layout
 
 block content
   h1= title
+  nav
+    ul
+      li
+        a(href="/admin/news/add") Dodaj artukuł
   table
     tr
       th ID
@@ -14,4 +18,4 @@ block content
         td=item.title
         td=item.created
         td
-          a Usuń
+          a(href=`admin/news/delete/${item._id}`) Usuń

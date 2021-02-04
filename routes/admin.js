@@ -37,4 +37,10 @@ router.post("/news/add", (req, res) => {
   });
 });
 
+router.get("/news/delete/:id", (req, res) => {
+  News.findByIdAndDelete(req.params.id, (err) => {
+    res.redirect("/admin");
+  });
+});
+
 module.exports = router;
